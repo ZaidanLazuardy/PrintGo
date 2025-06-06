@@ -5,7 +5,30 @@
         "location": "Jakarta Selatan",
         "services": ["Banner", "Dokumen", "Poster"],
         "sizes": ["A4", "A3", "A2"],
-        "materials": ["Art Paper", "HVS", "Vinyl"]
+        "materials": ["Art Paper", "HVS", "Vinyl"],
+        "deliveryFee": 15000,
+        "prices": {
+            "A4": {
+                "HVS": 500,
+                "Art Paper": 1000,
+                "Vinyl": 5000 
+            },
+            "A3": {
+                "HVS": 1000,
+                "Art Paper": 2000,
+                "Vinyl": 10000
+            },
+            "A2": {
+                "HVS": 2000,
+                "Art Paper": 4000,
+                "Vinyl": 25000
+            }
+        },
+        "customPricePerCm2": {
+            "HVS": 2,
+            "Art Paper": 4,
+            "Vinyl": 15
+        }
     },
     {
         "id": 2,
@@ -13,6 +36,21 @@
         "location": "Bandung",
         "services": ["Dokumen", "Poster"],
         "sizes": ["A4", "F4"],
-        "materials": ["HVS", "Glossy"]
+        "materials": ["HVS", "Glossy"],
+        "deliveryFee": 12000,
+        "prices": {
+            "A4": {
+                "HVS": 400,
+                "Glossy": 900
+            },
+            "F4": {
+                "HVS": 500,
+                "Glossy": 1100
+            }
+        },
+        "customPricePerCm2": {
+            "HVS": 1.5,
+            "Glossy": 3.5
+        }
     }
 ]

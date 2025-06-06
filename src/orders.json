@@ -13,5 +13,101 @@
     "address": "N/A",
     "design": null,
     "createdAt": "2025-06-06T10:03:30.393Z"
+  },
+  {
+    "id": 3,
+    "storeId": 1,
+    "size": "4x4 cm",
+    "material": "Art Paper",
+    "pickup": "Ambil di Tempat",
+    "address": "N/A",
+    "design": "/uploads/1749215644656.jpg",
+    "createdAt": "2025-06-06T13:14:04.671Z"
+  },
+  {
+    "id": 4,
+    "storeId": 1,
+    "size": "10x10 cm",
+    "material": "Vinyl",
+    "pickup": "Ambil di Tempat",
+    "address": "N/A",
+    "design": "/uploads/1749215801113.jpg",
+    "createdAt": "2025-06-06T13:16:41.127Z"
+  },
+  {
+    "id": 5,
+    "storeId": 1,
+    "size": "10x7 cm",
+    "material": "HVS",
+    "pickup": "Ambil di Tempat",
+    "address": "N/A",
+    "design": "/uploads/1749215834783.jpg",
+    "createdAt": "2025-06-06T13:17:14.787Z"
+  },
+  {
+    "id": 6,
+    "storeId": 1,
+    "size": "30x10 cm",
+    "material": "HVS",
+    "pickup": "Ambil di Tempat",
+    "address": "N/A",
+    "design": "/uploads/1749216131308.jpg",
+    "createdAt": "2025-06-06T13:22:11.313Z"
+  },
+  {
+    "id": 7,
+    "storeId": 1,
+    "size": "8x8 cm",
+    "material": "Vinyl",
+    "pickup": "Ambil di Tempat",
+    "address": "N/A",
+    "design": "/uploads/1749216274749.jpg",
+    "createdAt": "2025-06-06T13:24:34.754Z"
+  },
+  {
+    "id": 8,
+    "storeId": 1,
+    "size": "10x9 cm",
+    "material": "Art Paper",
+    "pickup": "Ambil di Tempat",
+    "address": "N/A",
+    "design": "/uploads/1749216439679.jpg",
+    "status": "Diproses",
+    "createdAt": "2025-06-06T13:27:19.683Z"
+  },
+  {
+    "id": 9,
+    "storeId": 2,
+    "size": "20x10 cm",
+    "material": "Glossy",
+    "pickup": "Delivery",
+    "address": "asdf",
+    "design": "/uploads/1749216498267.jpg",
+    "status": "Diproses",
+    "createdAt": "2025-06-06T13:28:18.271Z"
+  },
+  {
+    "id": 10,
+    "storeId": 1,
+    "type": "Banner",
+    "size": "10x10 cm",
+    "material": "Vinyl",
+    "pickup": "Delivery",
+    "address": "jalan alamat cileungsi",
+    "design": "/uploads/1749216802210.jpg",
+    "status": "Diproses",
+    "createdAt": "2025-06-06T13:33:22.218Z"
+  },
+  {
+    "id": 11,
+    "storeId": 1,
+    "type": "Banner",
+    "size": "20x10 cm",
+    "material": "Vinyl",
+    "pickup": "Delivery",
+    "address": "Jl. Alamat, Cileungsi, Bogor",
+    "design": "/uploads/1749216858180.jpg",
+    "status": "Diproses",
+    "createdAt": "2025-06-06T13:34:18.190Z"
   }
 ]

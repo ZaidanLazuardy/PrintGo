@@ -8,6 +8,7 @@ const PrintForm = ({ printer, type, onSubmit }) => {
   const [preview, setPreview] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [price, setPrice] = React.useState(0);
+  const [quantity, setQuantity] = React.useState(1); // State baru buat jumlah pembelian
 
   // useEffect untuk menghitung harga secara dinamis
   React.useEffect(() => {
@@ -31,7 +32,7 @@ const PrintForm = ({ printer, type, onSubmit }) => {
       }
     }
 
-    let finalPrice = basePrice;
+    let finalPrice = basePrice * quantity; // Kalikan dengan jumlah pembelian
 
     // 3. Tambahkan biaya pengiriman jika pesanan valid dan opsi delivery dipilih
     if (basePrice > 0 && pickup === 'Delivery') {
@@ -41,14 +42,14 @@ const PrintForm = ({ printer, type, onSubmit }) => {
     // Bulatkan ke angka bulat terdekat untuk menghindari desimal
     setPrice(Math.round(finalPrice));
 
-  }, [size, material, pickup, printer, customSize]); // Penting: tambahkan customSize ke dependency array
+  }, [size, material, pickup, printer, customSize, quantity]); // Tambah quantity ke dependency array
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validasi input
-    if (!size || !material || !pickup || !design) {
-      setError('Semua field wajib diisi!');
+    if (!size || !material || !pickup || !design || quantity < 1) {
+      setError('Semua field wajib diisi dan jumlah harus lebih dari 0!');
       return;
     }
     if (pickup === 'Delivery' && !address) {
@@ -67,16 +68,15 @@ const PrintForm = ({ printer, type, onSubmit }) => {
     setError(null);
     const formData = new FormData();
     formData.append('storeId', printer.id);
-    // VVV TAMBAHKAN BARIS INI VVV
     formData.append('type', type.name); // Mengirim nama dari jenis printing
-    // ^^^ TAMBAHKAN BARIS INI ^^^
     formData.append('size', size === 'Custom' ? `${customSize.width}x${customSize.height} cm` : size);
     formData.append('material', material);
     formData.append('pickup', pickup);
     formData.append('address', address);
     formData.append('design', design);
+    formData.append('quantity', quantity); // Kirim jumlah pembelian ke backend
     // Anda bisa menambahkan harga ke form data jika ingin menyimpannya di backend
-    // formData.append('price', price);
+    formData.append('price', price);
 
     try {
       const response = await fetch('/api/orders', {
@@ -176,7 +176,20 @@ const PrintForm = ({ printer, type, onSubmit }) => {
           </select>
         </div>
 
-        {/* ... sisa form lainnya sama ... */}
+        {/* JUMLAH PEMBELIAN */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Jumlah Pembelian</label>
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+            min="1"
+            required
+          />
+        </div>
+
+        {/* UPLOAD DESAIN */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Upload Desain</label>
           <input

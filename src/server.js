@@ -52,6 +52,57 @@ app.post('/api/orders', upload.single('design'), (req, res) => {
   res.json({ message: 'Pesanan diterima!', order: newOrder });
 });
 
+// API untuk ambil semua toko
+app.get('/api/stores', (req, res) => {
+  try {
+    const stores = JSON.parse(fs.readFileSync('src/stores.json'));
+    res.json(stores);
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal membaca data toko' });
+  }
+});
+
+// API untuk ambil detail satu toko berdasarkan ID
+app.get('/api/stores/:id', (req, res) => {
+  try {
+    const stores = JSON.parse(fs.readFileSync('src/stores.json'));
+    const store = stores.find(s => s.id === parseInt(req.params.id));
+    if (!store) {
+      return res.status(404).json({ message: 'Toko tidak ditemukan' });
+    }
+    res.json(store);
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal membaca data toko' });
+  }
+});
+
+// Update API pesanan agar menyimpan id toko
+app.post('/api/orders', upload.single('design'), (req, res) => {
+  const { size, material, pickup, address, storeId } = req.body;
+  const design = req.file ? `/uploads/${req.file.filename}` : null;
+
+  let orders = [];
+  try {
+    orders = JSON.parse(fs.readFileSync('src/orders.json'));
+  } catch (e) {
+    orders = [];
+  }
+
+  const newOrder = {
+    id: orders.length + 1,
+    storeId: parseInt(storeId),
+    size,
+    material,
+    pickup,
+    address: pickup === 'Delivery' ? address : 'N/A',
+    design,
+    createdAt: new Date().toISOString(),
+  };
+  orders.push(newOrder);
+  fs.writeFileSync('src/orders.json', JSON.stringify(orders, null, 2));
+  res.json({ message: 'Pesanan diterima!', order: newOrder });
+});
+
 // Jalankan server
 app.listen(port, () => {
   console.log(`Server jalan di http://localhost:${port}`);

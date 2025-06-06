@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "PrintGo Jakarta",
+        "location": "Jakarta Selatan",
+        "services": ["Banner", "Dokumen", "Poster"],
+        "sizes": ["A4", "A3", "A2"],
+        "materials": ["Art Paper", "HVS", "Vinyl"]
+    },
+    {
+        "id": 2,
+        "name": "DigitalPrint Bandung",
+        "location": "Bandung",
+        "services": ["Dokumen", "Poster"],
+        "sizes": ["A4", "F4"],
+        "materials": ["HVS", "Glossy"]
+    }
+]

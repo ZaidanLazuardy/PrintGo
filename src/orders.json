@@ -7,5 +7,11 @@
     "address": "N/A",
     "design": "/uploads/1748784507902.jpg",
     "createdAt": "2025-06-01T13:28:27.908Z"
+  },
+  {
+    "id": 2,
+    "address": "N/A",
+    "design": null,
+    "createdAt": "2025-06-06T10:03:30.393Z"
   }
 ]

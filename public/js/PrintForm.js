@@ -1,40 +1,24 @@
 const PrintForm = ({ printer, type, onSubmit }) => {
-  const [size, setSize] = React.useState('');
+  const [size, setSize] = React.useState(type.name === 'Banner' ? 'Custom' : '');
   const [customSize, setCustomSize] = React.useState({ width: '', height: '' });
   const [material, setMaterial] = React.useState('');
   const [design, setDesign] = React.useState(null);
   const [pickup, setPickup] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [preview, setPreview] = React.useState(null);
-  const [error, setError] = React.useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!size || !material || !pickup || (pickup === 'Delivery' && !address) || !design) {
-      setError('Semua field wajib diisi!');
-      return;
-    }
+    // Simulasi respons API
+    const mockOrderId = Math.floor(Math.random() * 1000); // Buat ID acak
+    const mockResponse = {
+      order: {
+        id: mockOrderId,
+      },
+    };
 
-    const formData = new FormData();
-    formData.append('storeId', printer.id);
-    formData.append('size', size === 'Custom' ? `${customSize.width}x${customSize.height} cm` : size);
-    formData.append('material', material);
-    formData.append('pickup', pickup);
-    formData.append('address', address);
-    if (design) formData.append('design', design);
-
-    try {
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        body: formData,
-      });
-      if (!response.ok) throw new Error('Gagal submit pesanan');
-      const result = await response.json();
-      onSubmit(result.order.id);
-      setError(null);
-    } catch (err) {
-      setError('Error: ' + err.message);
-    }
+    // Langsung panggil onSubmit tanpa fetch
+    onSubmit(mockResponse.order.id);
   };
 
   const handleFileChange = (e) => {
@@ -43,9 +27,16 @@ const PrintForm = ({ printer, type, onSubmit }) => {
       setDesign(file);
       setPreview(URL.createObjectURL(file));
     } else {
-      setError('Harap upload file gambar (PNG/JPG)!');
+      alert('Harap upload file gambar (PNG/JPG)!');
     }
   };
+
+  // Ukuran default "Custom" buat Banner
+  const sizeOptions = type.name === 'Banner' ? [] : [
+    { value: 'A4', label: 'A4 (21 x 29.7 cm)' },
+    { value: 'A3', label: 'A3 (29.7 x 42 cm)' },
+    { value: 'Custom', label: 'Custom' },
+  ];
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg mx-auto">
@@ -53,22 +44,23 @@ const PrintForm = ({ printer, type, onSubmit }) => {
         Pesan di {printer.name} - {type.name}
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Ukuran Cetak</label>
-          <select
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            required
-          >
-            <option value="">Pilih Ukuran</option>
-            {printer.sizes.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-            <option value="Custom">Custom</option>
-          </select>
-        </div>
-        {size === 'Custom' && (
+        {type.name !== 'Banner' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Ukuran Cetak</label>
+            <select
+              value={size}
+              onChange={(e) => setSize(e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              required
+            >
+              <option value="">Pilih Ukuran</option>
+              {sizeOptions.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+        )}
+        {(type.name === 'Banner' || size === 'Custom') && (
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">Lebar (cm)</label>
             <input
@@ -77,6 +69,7 @@ const PrintForm = ({ printer, type, onSubmit }) => {
               onChange={(e) => setCustomSize({ ...customSize, width: e.target.value })}
               className="block w-full p-2 border border-gray-300 rounded-md"
               placeholder="Lebar"
+              required
             />
             <label className="block text-sm font-medium text-gray-700">Tinggi (cm)</label>
             <input
@@ -85,6 +78,7 @@ const PrintForm = ({ printer, type, onSubmit }) => {
               onChange={(e) => setCustomSize({ ...customSize, height: e.target.value })}
               className="block w-full p-2 border border-gray-300 rounded-md"
               placeholder="Tinggi"
+              required
             />
           </div>
         )}
@@ -97,7 +91,7 @@ const PrintForm = ({ printer, type, onSubmit }) => {
             required
           >
             <option value="">Pilih Bahan</option>
-            {printer.materials.map((mat) => (
+            {type.materials.map((mat) => (
               <option key={mat} value={mat}>{mat}</option>
             ))}
           </select>
@@ -149,7 +143,6 @@ const PrintForm = ({ printer, type, onSubmit }) => {
           <img src={preview} alt="Design Preview" className="w-full h-auto border rounded-md" />
         </div>
       )}
-      {error && <p className="text-center text-red-500 mt-2">{error}</p>}
     </div>
   );
 };

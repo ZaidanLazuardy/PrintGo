@@ -40,7 +40,7 @@
         "deliveryFee": 12000,
         "prices": {
             "A4": {
-                "HVS": 400,
+                "HVS": 500,
                 "Glossy": 900
             },
             "F4": {
